@@ -67,11 +67,17 @@ mu.tail = mu.rest = (array, n = 1) ->
 # Collection methods #
 ######################
 
-mu.partition = (array, fn) ->
+mu.partition = (coll, fn) ->
   [truthy, falsy] = (result = [[], []])
-  return result unless array.length
-  for obj in array
-    (if fn(obj) then truthy else falsy).push obj
+  return result if mu.isEmpty coll
+
+  if mu.isArray coll
+    for obj in coll
+      (if fn(obj) then truthy else falsy).push obj
+  else
+    for own key, val of coll
+      (if fn(key, val) then truthy else falsy).push [key, val]
+
   result
 
 

@@ -246,6 +246,17 @@ Returns an array containing two arrays. The first array contains all the values 
 ```javascript
 var isEven = function(n) {return n % 2 == 0};
 partition([1, 2, 3, 4, 5], isEven) // [[2, 4], [1, 3, 5]]
+
+var objIterator = function(key, val) {return isEven(val)};
+result = partition({'one': 1, 'two': 2, 'three': 3}, objIterator)
+
+console.log(result)
+/*
+  [
+    [['two', 2]],
+    [['one', 1], ['three', 3]]
+  ]
+*/
 ```
 
 ## License

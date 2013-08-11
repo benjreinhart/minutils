@@ -161,19 +161,31 @@
         if (null != array)
           return array.slice(n);
       };
-      mu.partition = function (array, fn) {
-        var cache$1, falsy, obj, result, truthy;
+      mu.partition = function (coll, fn) {
+        var cache$1, falsy, key, obj, result, truthy, val;
         cache$1 = result = [
           [],
           []
         ];
         truthy = cache$1[0];
         falsy = cache$1[1];
-        if (!array.length)
+        if (mu.isEmpty(coll))
           return result;
-        for (var i$ = 0, length$ = array.length; i$ < length$; ++i$) {
-          obj = array[i$];
-          (fn(obj) ? truthy : falsy).push(obj);
+        if (mu.isArray(coll)) {
+          for (var i$ = 0, length$ = coll.length; i$ < length$; ++i$) {
+            obj = coll[i$];
+            (fn(obj) ? truthy : falsy).push(obj);
+          }
+        } else {
+          for (key in coll) {
+            if (!isOwn$(coll, key))
+              continue;
+            val = coll[key];
+            (fn(key, val) ? truthy : falsy).push([
+              key,
+              val
+            ]);
+          }
         }
         return result;
       };
