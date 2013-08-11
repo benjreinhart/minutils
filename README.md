@@ -239,7 +239,7 @@ rest([1, 2, 3, 4, 5], 3) // [4, 5]
 ### Collections
 
 <a name="partition" />
-##### partition(array, fn)
+##### partition(coll, fn)
 
 Returns an array containing two arrays. The first array contains all the values which the `fn` evalutates as truthy, the second array contains the rest.
 
