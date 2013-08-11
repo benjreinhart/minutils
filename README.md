@@ -42,7 +42,9 @@ Because I don't necessarily need to bring in something the size of underscore in
 * [partition](#partition)
 
 
-< name="extend" />
+### Utilities
+
+<name="extend" />
 ##### extend(destination, objects*)
 
 Copies all properties from all `objects` into `destination`, replacing any existing properties of the same name.
@@ -196,6 +198,8 @@ has({toString: ''}, 'toString') // true
 has({}, 'toString') // false
 ```
 
+### Arrays
+
 <name="first" />
 <name="head" />
 ##### first(array, n = 1)
@@ -231,6 +235,9 @@ Returns the rest of the array starting at index `n` (default is 1).
 rest([1, 2, 3, 4, 5]) // [2, 3, 4, 5]
 rest([1, 2, 3, 4, 5], 3) // [4, 5]
 ```
+
+### Collections
+
 <name="partition" />
 ##### partition(array, fn)
 
