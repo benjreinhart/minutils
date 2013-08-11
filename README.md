@@ -14,11 +14,33 @@ Because I don't necessarily need to bring in something the size of underscore in
 
 ## API
 
+#### Utilities
+
 * [extend](#extend)
 * [defaults](#defaults)
 * [clone](#clone)
 * [isObject](#isObject)
 * [isArray](#isArray)
+* [isString](#isString)
+* [isNumber](#isNumber)
+* [isFunction](#isFunction)
+* [isArguments](#isArguments)
+* [isBoolean](#isBoolean)
+* [isRegExp](#isRegExp)
+* [isDate](#isDate)
+* [isEmpty](#isEmpty)
+* [has](#has)
+
+#### Arrays
+
+* [first](#first), [head](#head)
+* [last](#last)
+* [rest](#rest), [tail](#tail)
+
+#### Collections
+
+* [partition](#partition)
+
 
 < name="extend" />
 ##### extend(destination, objects*)
@@ -32,7 +54,7 @@ extend(person, {age: 124}, {alive: false})
 console.log(person) // {name: 'RICHARD', age: 124, alive: false}
 ```
 
-< name="defaults" />
+<name="defaults" />
 ##### defaults(destination, objects*)
 
 Takes all properties from `objects` and copies them in to `destination` *only* if the properties are `undefined` in `destination`
@@ -44,7 +66,7 @@ defaults(person, {name: 'Lisa'}, {age: 124}, {alive: false})
 console.log(person) // {name: 'Richard', age: 124, alive: false}
 ```
 
-< name="clone" />
+<name="clone" />
 ##### clone(object)
 
 Returns a shallow copy of `object`.
@@ -53,7 +75,7 @@ Returns a shallow copy of `object`.
 clone({attr: true}) // {attr: true}
 ```
 
-< name="isObject" />
+<name="isObject" />
 ##### isObject(object)
 
 Determines whether `object` is an Object.
@@ -64,7 +86,7 @@ isObject({}) // true
 isObject('') // false
 ```
 
-< name="isArray" />
+<name="isArray" />
 ##### isArray(object)
 
 Is the native `isArray` if exists. Determines whether an object is a real array.
@@ -74,7 +96,7 @@ isArray(['first element']) // true
 isArray({'0': 'first element', length: 1}) // false
 isArray(arguments) // false
 ```
-< name="isString" />
+<name="isString" />
 ##### isString(object)
 
 Determines whether `object` is a String.
@@ -84,7 +106,7 @@ isString('s') // true
 isString({'0': 's'}) // false
 ```
 
-< name="isNumber" />
+<name="isNumber" />
 ##### isNumber(object)
 
 Determines whether `object` is a Number.
@@ -94,7 +116,7 @@ isNumber(10) // true
 isNumber('10') // false
 ```
 
-< name="isFunction" />
+<name="isFunction" />
 ##### isFunction(object)
 
 Determines whether `object` is a Function.
@@ -104,7 +126,7 @@ isFunction(function(){}) // true
 isFunction({}) // false
 ```
 
-< name="isArguments" />
+<name="isArguments" />
 ##### isArguments(object)
 
 Determines whether `object` is the `arguments` object.
@@ -116,7 +138,7 @@ Determines whether `object` is the `arguments` object.
 })()
 ```
 
-< name="isBoolean" />
+<name="isBoolean" />
 ##### isBoolean
 
 Determines whether `object` is a Boolean.
@@ -127,7 +149,17 @@ isBoolean(false) // true
 isBoolean(true) // false
 ```
 
-< name="isDate" />
+<name="isRegExp" />
+##### isRegExp(object)
+
+Determines whether `object` is a RegExp.
+
+```javascript
+isRegExp(//) // true
+isRegExp(10) // false
+```
+
+<name="isDate" />
 ##### isDate(object)
 
 Determines whether `object` is a Date.
@@ -137,7 +169,7 @@ isDate(new Date) // true
 isDate(10) // false
 ```
 
-< name="isEmpty" />
+<name="isEmpty" />
 ##### isEmpty(object)
 
 Determines whether the object has any values.
@@ -154,8 +186,18 @@ isEmpty([1]) // false
 isEmpty('string') // false
 ```
 
-< name="first" />
-< name="head" />
+<name="has" />
+##### has(object, key)
+
+Determines whether `object` has own `key`.
+
+```javascript
+has({toString: ''}, 'toString') // true
+has({}, 'toString') // false
+```
+
+<name="first" />
+<name="head" />
 ##### first(array, n = 1)
 
 Alias: `head`
@@ -167,7 +209,7 @@ first([1, 2, 3, 4, 5]) // 1
 first([1, 2, 3, 4, 5], 3) // [1, 2, 3]
 ```
 
-< name="last" />
+<name="last" />
 ##### last(array, n = 1)
 
 Returns the last `n` elements of teh array of the last element of the array if `n` is 1 (the default).
@@ -177,8 +219,8 @@ last([1, 2, 3, 4, 5]) // 5
 last([1, 2, 3, 4, 5], 3) // [3, 4, 5]
 ```
 
-< name="rest" />
-< name="tail" />
+<name="rest" />
+<name="tail" />
 ##### rest(array, n = 1)
 
 Alias: `tail`
@@ -189,7 +231,7 @@ Returns the rest of the array starting at index `n` (default is 1).
 rest([1, 2, 3, 4, 5]) // [2, 3, 4, 5]
 rest([1, 2, 3, 4, 5], 3) // [4, 5]
 ```
-< name="partition" />
+<name="partition" />
 ##### partition(array, fn)
 
 Returns an array containing two arrays. The first array contains all the values which the `fn` evalutates as truthy, the second array contains the rest.
