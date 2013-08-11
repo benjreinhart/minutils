@@ -14,7 +14,7 @@ Because I don't necessarily need to bring in something the size of underscore in
 
 ## API
 
-### extend(destination, objects*)
+#### extend(destination, objects*)
 
 Copies all properties from all `objects` into `destination`, replacing any existing properties of the same name.
 
@@ -25,7 +25,7 @@ extend(person, {age: 124}, {alive: false})
 console.log(person) // {name: 'RICHARD', age: 124, alive: false}
 ```
 
-### defaults(destination, objects*)
+#### defaults(destination, objects*)
 
 Takes all properties from `objects` and copies them in to `destination` *only* if the properties are `undefined` in `destination`
 
@@ -36,7 +36,7 @@ defaults(person, {name: 'Lisa'}, {age: 124}, {alive: false})
 console.log(person) // {name: 'Richard', age: 124, alive: false}
 ```
 
-### clone(object)
+#### clone(object)
 
 Returns a shallow copy of `object`.
 
@@ -44,7 +44,7 @@ Returns a shallow copy of `object`.
 clone({attr: true}) // {attr: true}
 ```
 
-### isArray(object)
+#### isArray(object)
 
 Is the native `isArray` if exists. Determines whether an object is a real array.
 
@@ -54,7 +54,7 @@ isArray({'0': 'first element', length: 1}) // false
 isArray(arguments) // false
 ```
 
-### isObject(object)
+#### isObject(object)
 
 Determines whether `object` is an Object.
 
@@ -64,7 +64,7 @@ isObject({}) // true
 isObject('') // false
 ```
 
-### isString(object)
+#### isString(object)
 
 Determines whether `object` is a String.
 
@@ -73,7 +73,7 @@ isString('s') // true
 isString({'0': 's'}) // false
 ```
 
-### isNumber(object)
+#### isNumber(object)
 
 Determines whether `object` is a Number.
 
@@ -82,7 +82,7 @@ isNumber(10) // true
 isNumber('10') // false
 ```
 
-### isFunction(object)
+#### isFunction(object)
 
 Determines whether `object` is a Function.
 
@@ -91,7 +91,7 @@ isFunction(function(){}) // true
 isFunction({}) // false
 ```
 
-### isBoolean
+#### isBoolean
 
 Determines whether `object` is a Boolean.
 
@@ -101,7 +101,7 @@ isBoolean(false) // true
 isBoolean(true) // false
 ```
 
-### isDate(object)
+#### isDate(object)
 
 Determines whether `object` is a Date.
 
@@ -110,7 +110,7 @@ isDate(new Date) // true
 isDate(10) // false
 ```
 
-### isEmpty
+#### isEmpty
 
 Determines whether the object has any values.
 
@@ -126,7 +126,7 @@ isEmpty([1]) // false
 isEmpty('string') // false
 ```
 
-### first(array, n = 1)
+#### first(array, n = 1)
 
 Alias: `head`
 
@@ -137,7 +137,7 @@ first([1, 2, 3, 4, 5]) // 1
 first([1, 2, 3, 4, 5], 3) // [1, 2, 3]
 ```
 
-### last(array, n = 1)
+#### last(array, n = 1)
 
 Returns the last `n` elements of teh array of the last element of the array if `n` is 1 (the default).
 
@@ -146,7 +146,7 @@ last([1, 2, 3, 4, 5]) // 5
 last([1, 2, 3, 4, 5], 3) // [3, 4, 5]
 ```
 
-### rest(array, n = 1)
+#### rest(array, n = 1)
 
 Alias: `tail`
 
@@ -157,7 +157,7 @@ rest([1, 2, 3, 4, 5]) // [2, 3, 4, 5]
 rest([1, 2, 3, 4, 5], 3) // [4, 5]
 ```
 
-### partition(array, fn)
+#### partition(array, fn)
 
 Returns an array containing two arrays. The first array contains all the values which the `fn` evalutates as truthy, the second array contains the rest.
 
