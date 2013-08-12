@@ -103,15 +103,15 @@ mu.map = (coll, fn, context) ->
   else
     fn.call(context, val, key, coll) for own key, val of coll
 
-mu.partition = (coll, fn) ->
+mu.partition = (coll, fn, context) ->
   [truthy, falsy] = (result = [[], []])
   return result if mu.isEmpty coll
 
   if mu.isArray coll
-    for elem in coll
-      (if fn(elem) then truthy else falsy).push elem
+    for elem, i in coll
+      (if fn.call(context, elem, i, coll) then truthy else falsy).push elem
   else
     for own key, val of coll
-      (if fn(key, val) then truthy else falsy).push [key, val]
+      (if fn.call(context, val, key, coll) then truthy else falsy).push [key, val]
 
   result

@@ -238,11 +238,26 @@ describe 'minutils', ->
         it 'is an array of two arrays', ->
           expect(partition [1, 2, 3, 4, 5], isEven).to.eql [[2, 4], [1, 3, 5]]
 
-      describe 'object collections', ->
-        iterator = (key, val) -> isEven(val)
+        it 'is called with `context` as its `this` value', ->
+          context = {}
+          partition (nums = [1, 2]), (iterator = sinon.stub()), context
 
+          expect(iterator.calledTwice).to.be.true
+          expect(iterator.firstCall.args).to.eql [1, 0, nums]
+          expect(iterator.secondCall.args).to.eql [2, 1, nums]
+          expect(iterator.alwaysCalledOn context).to.be.true
+
+      describe 'object collections', ->
         it 'is an array of two arrays', ->
-          expect(partition {'one': 1, 'two': 2, 'three': 3}, iterator).to.eql [
+          expect(partition {'one': 1, 'two': 2, 'three': 3}, isEven).to.eql [
             [['two', 2]],
             [['one', 1], ['three', 3]]
           ]
+
+        it 'is called with `context` as its `this` value', ->
+          context = {}; nums = {one: 1}
+          partition nums, (iterator = sinon.stub()), context
+
+          expect(iterator.calledOnce).to.be.true
+          expect(iterator.firstCall.args).to.eql [1, 'one', nums]
+          expect(iterator.alwaysCalledOn context).to.be.true

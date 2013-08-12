@@ -213,8 +213,8 @@
           }.call(this, []);
         }
       };
-      mu.partition = function (coll, fn) {
-        var cache$1, elem, falsy, key, result, truthy, val;
+      mu.partition = function (coll, fn, context) {
+        var cache$1, elem, falsy, i, key, result, truthy, val;
         cache$1 = result = [
           [],
           []
@@ -226,14 +226,15 @@
         if (mu.isArray(coll)) {
           for (var i$ = 0, length$ = coll.length; i$ < length$; ++i$) {
             elem = coll[i$];
-            (fn(elem) ? truthy : falsy).push(elem);
+            i = i$;
+            (fn.call(context, elem, i, coll) ? truthy : falsy).push(elem);
           }
         } else {
           for (key in coll) {
             if (!isOwn$(coll, key))
               continue;
             val = coll[key];
-            (fn(key, val) ? truthy : falsy).push([
+            (fn.call(context, val, key, coll) ? truthy : falsy).push([
               key,
               val
             ]);

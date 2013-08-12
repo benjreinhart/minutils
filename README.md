@@ -280,14 +280,13 @@ map({two: 2, four: 4}, square) // [4, 16]
 
 Returns an array containing two arrays. The first array contains all the values which the `fn` evalutates as truthy, the second array contains the rest.
 
+If `coll` is an array, `fn` will be called with `(element, index, coll)`. If `coll` is a JavaScript object, then `fn` will be called with `(value, key, coll)`.
+
 ```javascript
 var isEven = function(n) {return n % 2 == 0};
 partition([1, 2, 3, 4, 5], isEven) // [[2, 4], [1, 3, 5]]
 
-var objIterator = function(key, val) {return isEven(val)};
-result = partition({'one': 1, 'two': 2, 'three': 3}, objIterator)
-
-console.log(result)
+console.log(partition({'one': 1, 'two': 2, 'three': 3}, isEven))
 /*
   [
     [['two', 2]],
