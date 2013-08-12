@@ -29,6 +29,7 @@ Because I don't necessarily need to bring in something the size of underscore in
 * [isRegExp](#isRegExp)
 * [isDate](#isDate)
 * [isEmpty](#isEmpty)
+* [isBlank](#isBlank)
 * [has](#has)
 
 #### Arrays
@@ -188,6 +189,19 @@ isEmpty('') // true
 isEmpty({key: 'val'}) // false
 isEmpty([1]) // false
 isEmpty('string') // false
+```
+
+<a name="isBlank" />
+##### isBlank(string)
+
+Is `true` if a `string` contains only whitespace characters.
+
+```javascript
+isBlank('') // true
+isBlank('         ') // true
+isBlank('\n\t\r \t \t \n \n  \r') // true
+
+isBlank('      c   ') // false
 ```
 
 <a name="has" />

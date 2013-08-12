@@ -115,13 +115,6 @@ describe 'minutils', ->
         expect(isBoolean false).to.be.true
         expect(isBoolean {}).to.be.false
 
-    describe '#has', ->
-      {has} = minutils
-
-      it 'is true if `object` has own `key`', ->
-        expect(has {name: 'Johnson'}, 'name').to.be.true
-        expect(has {}, 'toString').to.be.false
-
     describe '#isEmpty', ->
       {isEmpty} = minutils
 
@@ -139,6 +132,25 @@ describe 'minutils', ->
         expect(isEmpty [1]).to.be.false
         expect(isEmpty 'string').to.be.false
 
+    describe '#isBlank', ->
+      {isBlank} = minutils
+
+      it 'is true if the string only contains whitespace characters', ->
+        expect(isBlank '').to.be.true
+        expect(isBlank '         ').to.be.true
+        expect(isBlank '\n\t\r \t \t \n \n  \r').to.be.true
+
+      it 'is false if the string contains one or more non whitespace characters', ->
+        expect(isBlank 'c').to.be.false
+        expect(isBlank '     n ').to.be.false
+        expect(isBlank '     \n blah ').to.be.false
+
+    describe '#has', ->
+      {has} = minutils
+
+      it 'is true if `object` has own `key`', ->
+        expect(has {name: 'Johnson'}, 'name').to.be.true
+        expect(has {}, 'toString').to.be.false
 
   describe 'Arrays', ->
     describe '#first, #head', ->

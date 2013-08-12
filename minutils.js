@@ -131,6 +131,9 @@
         }
         return true;
       };
+      mu.isBlank = function (str) {
+        return !/\S/.test(str);
+      };
       mu.has = function (obj, key) {
         return hasOwnProperty.call(obj, key);
       };
