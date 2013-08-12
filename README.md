@@ -4,7 +4,7 @@ Minimal utility methods for node and the browser.
 
 ## How does one acquire this library?
 
-Node: `npm install minutils`
+Node: `npm install minutils`. `require 'minutils'`
 
 Browser: Copy either minutils.js or minutils.min.js (in the root of this repo) into your project. Inlcude on page. Then access it at `window.mu`.
 
