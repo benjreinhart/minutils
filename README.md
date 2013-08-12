@@ -276,7 +276,7 @@ map({two: 2, four: 4}, square) // [4, 16]
 ```
 
 <a name="partition" />
-##### partition(coll, fn)
+##### partition(coll, fn[, context])
 
 Returns an array containing two arrays. The first array contains all the values which the `fn` evalutates as truthy, the second array contains the rest.
 
