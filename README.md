@@ -53,10 +53,10 @@ Because I don't necessarily need to bring in something the size of underscore in
 Copies all properties from all `objects` into `destination`, replacing any existing properties of the same name.
 
 ```javascript
-var person = {name: 'RICHARD'}
-extend(person, {age: 124}, {alive: false})
+var person = {name: 'Richard'}
+extend(person, {name: 'Lisa'}, {age: 124}, {alive: false})
 
-console.log(person) // {name: 'RICHARD', age: 124, alive: false}
+console.log(person) // {name: 'Lisa', age: 124, alive: false}
 ```
 
 <a name="defaults" />
