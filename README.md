@@ -176,7 +176,7 @@ isDate(10) // false
 <a name="isEmpty" />
 ##### isEmpty(object)
 
-Determines whether the object has any values.
+Determines whether `object` has any values.
 
 ```javascript
 isEmpty(null) // true
