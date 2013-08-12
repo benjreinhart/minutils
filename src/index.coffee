@@ -55,14 +55,13 @@ mu.isEmpty = (obj) ->
   return false for own key of obj
   true
 
+mu.has = (obj, key) ->
+  hasOwnProperty.call(obj, key)
+
 
 #################
 # Array Methods #
 #################
-
-
-mu.has = (obj, key) ->
-  hasOwnProperty.call(obj, key)
 
 mu.first = mu.head = (array, n = 1) ->
   return undefined unless array?
