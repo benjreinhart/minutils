@@ -218,7 +218,7 @@ first([1, 2, 3, 4, 5], 3) // [1, 2, 3]
 <a name="last" />
 ##### last(array, n = 1)
 
-Returns the last `n` elements of teh array of the last element of the array if `n` is 1 (the default).
+Returns the last `n` elements of the array or the last element of the array if `n` is 1 (the default).
 
 ```javascript
 last([1, 2, 3, 4, 5]) // 5
