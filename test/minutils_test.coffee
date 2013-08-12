@@ -1,3 +1,4 @@
+sinon = require 'sinon'
 minutils = require '../'
 {expect} = require 'chai'
 
@@ -53,7 +54,8 @@ describe 'minutils', ->
       {isArray} = minutils
 
       it 'is native `isArray` when it exists', ->
-        expect(isArray == Array.isArray).to.be.true
+        if minutils.isFunction Array.isArray
+          expect(isArray == Array.isArray).to.be.true
 
     describe '#isObject', ->
       {isObject} = minutils
@@ -171,6 +173,59 @@ describe 'minutils', ->
         expect(tail [1, 2, 3, 4, 5], 3).to.eql [4, 5]
 
   describe 'Collections', ->
+    describe '#each', ->
+      {each} = minutils
+
+      describe 'array collections', ->
+        it 'iterates over each item in an array', ->
+          coll = [1, 2, 3]
+          each coll, (iterator = sinon.stub()), coll
+
+          expect(iterator.calledThrice).to.be.true
+          expect(iterator.firstCall.args).to.eql [1, 0, coll]
+          expect(iterator.secondCall.args).to.eql [2, 1, coll]
+          expect(iterator.thirdCall.args).to.eql [3, 2, coll]
+
+          expect(iterator.alwaysCalledOn coll).to.be.true
+
+      describe 'object collections', ->
+        it 'iterates over each item in an object', ->
+          person = {name: 'john'}
+          each person, (iterator = sinon.stub()), person
+
+          expect(iterator.calledOnce).to.be.true
+          expect(iterator.firstCall.args).to.eql ['john', 'name', person]
+          expect(iterator.alwaysCalledOn person).to.be.true
+
+    describe '#map', ->
+      {map} = minutils
+      square = (val) -> val * val
+
+      describe 'array collections', ->
+        it 'is an array of the results of `fn` applied to each elem in coll', ->
+          expect(map [2, 4], square).to.eql [4, 16]
+
+        it 'is called with `context` as its `this` value', ->
+          context = {}
+          map (nums = [2, 4]), (iterator = sinon.stub()), context
+
+          expect(iterator.calledTwice).to.be.true
+          expect(iterator.firstCall.args).to.eql [2, 0, nums]
+          expect(iterator.secondCall.args).to.eql [4, 1, nums]
+          expect(iterator.alwaysCalledOn context).to.be.true
+
+      describe 'object collections', ->
+        it 'is an array of the results of `fn` applied to each key/value pair in coll', ->
+          expect(map {two: 2, four: 4}, square).to.eql [4, 16]
+
+        it 'is called with `context` as its `this` value', ->
+          context = {}; person = {name: 'jon'}
+          map person, (iterator = sinon.stub()), context
+
+          expect(iterator.calledOnce).to.be.true
+          expect(iterator.firstCall.args).to.eql ['jon', 'name', person]
+          expect(iterator.alwaysCalledOn context).to.be.true
+
     describe '#partition', ->
       {partition} = minutils
       isEven = (n) -> n % 2 is 0
@@ -179,11 +234,11 @@ describe 'minutils', ->
         expect(partition [], isEven).to.eql [[], []]
         expect(partition {}, isEven).to.eql [[], []]
 
-      describe 'arrays', ->
+      describe 'array collections', ->
         it 'is an array of two arrays', ->
           expect(partition [1, 2, 3, 4, 5], isEven).to.eql [[2, 4], [1, 3, 5]]
 
-      describe 'objects', ->
+      describe 'object collections', ->
         iterator = (key, val) -> isEven(val)
 
         it 'is an array of two arrays', ->
@@ -191,9 +246,3 @@ describe 'minutils', ->
             [['two', 2]],
             [['one', 1], ['three', 3]]
           ]
-
-
-
-
-
-

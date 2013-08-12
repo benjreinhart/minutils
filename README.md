@@ -39,6 +39,8 @@ Because I don't necessarily need to bring in something the size of underscore in
 
 #### Collections
 
+* [each](#each)
+* [map](#map)
 * [partition](#partition)
 
 
@@ -237,6 +239,41 @@ rest([1, 2, 3, 4, 5], 3) // [4, 5]
 ```
 
 ### Collections
+
+<a name="each" />
+##### each(coll, fn[, context])
+
+Applies `fn` to each element in `coll`. Returns `undefined`. `context` is `fn`'s `this` value.
+
+If `coll` is an array, `fn` will be called with `(element, index, coll)`. If `coll` is a JavaScript object, then `fn` will be called with `(value, key, coll)`.
+
+```javascript
+each([1, 2, 3], console.log, console)
+/*
+  1 0 [1, 2, 3]
+  2 1 [1, 2, 3]
+  3 2 [1, 2, 3]
+*/
+each({one: 1, two: 2, three: 3}, console.log, console)
+/*
+  1 'one' {one: 1, two: 2, three: 3}
+  2 'two' {one: 1, two: 2, three: 3}
+  3 'three' {one: 1, two: 2, three: 3}
+*/
+```
+
+<a name="map" />
+##### map(coll, fn[, context])
+
+Returns an array of the return values of applying `fn` to each element in `coll`.
+
+If `coll` is an array, `fn` will be called with `(element, index, coll)`. If `coll` is a JavaScript object, then `fn` will be called with `(value, key, coll)`.
+
+```javascript
+var square = function(n) {return n*n}
+map([2, 4], square) // [4, 16]
+map({two: 2, four: 4}, square) // [4, 16]
+```
 
 <a name="partition" />
 ##### partition(coll, fn)

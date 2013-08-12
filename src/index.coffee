@@ -1,7 +1,15 @@
-{slice} = Array.prototype
+ArrayProto = Array.prototype
 {toString, hasOwnProperty} = Object.prototype
 
+{slice} = ArrayProto
+nativeMap = ArrayProto.map
+nativeForEach = ArrayProto.forEach
+
 module.exports = mu = {}
+
+###################
+# Utility methods #
+###################
 
 mu.extend = (obj) ->
   slice.call(arguments, 1).forEach (source) ->
@@ -47,6 +55,12 @@ mu.isEmpty = (obj) ->
   return false for own key of obj
   true
 
+
+#################
+# Array Methods #
+#################
+
+
 mu.has = (obj, key) ->
   hasOwnProperty.call(obj, key)
 
@@ -67,17 +81,37 @@ mu.tail = mu.rest = (array, n = 1) ->
 # Collection methods #
 ######################
 
+mu.each = (coll, fn, context) ->
+  return if mu.isEmpty coll
+
+  if coll.forEach is nativeForEach
+    coll.forEach fn, context
+  else if mu.isArray coll
+    fn.call(context, elem, i, coll) for elem, i in coll
+  else
+    fn.call(context, val, key, coll) for own key, val of coll
+
+  undefined
+
+mu.map = (coll, fn, context) ->
+  return if mu.isEmpty coll
+
+  if coll.map is nativeMap
+    coll.map fn, context
+  else if mu.isArray coll
+    fn.call(context, elem, i, coll) for elem, i in coll
+  else
+    fn.call(context, val, key, coll) for own key, val of coll
+
 mu.partition = (coll, fn) ->
   [truthy, falsy] = (result = [[], []])
   return result if mu.isEmpty coll
 
   if mu.isArray coll
-    for obj in coll
-      (if fn(obj) then truthy else falsy).push obj
+    for elem in coll
+      (if fn(elem) then truthy else falsy).push elem
   else
     for own key, val of coll
       (if fn(key, val) then truthy else falsy).push [key, val]
 
   result
-
-
