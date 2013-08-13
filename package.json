@@ -1,6 +1,6 @@
 {
     "name": "minutils"
-  , "version": "0.0.22"
+  , "version": "0.0.3"
   , "description": "Minimal utility methods for node and the browser"
   , "author": "benjreinhart"
   , "engines":
