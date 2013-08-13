@@ -184,6 +184,29 @@ describe 'minutils', ->
         expect(rest [1, 2, 3, 4, 5], 3).to.eql [4, 5]
         expect(tail [1, 2, 3, 4, 5], 3).to.eql [4, 5]
 
+
+  describe 'Functions', ->
+    describe '#bind', ->
+      {bind} = minutils
+
+      it 'always calls `fn` in the `context` of `object`', ->
+        obj = {name: 'the dude!'}
+        unboundFn = -> @name
+        boundFn = bind unboundFn, obj
+
+        expect(unboundFn()).to.equal undefined
+        expect(boundFn()).to.equal 'the dude!'
+
+      it 'accepts default args and partially applies `fn`', ->
+        obj = {name: 'the dude!'}
+
+        fn = (greeting, greeting2) ->
+          "#{greeting} #{greeting2} #{@name}"
+
+        expect(bind(fn, obj)('hello', 'hi')).to.equal 'hello hi the dude!'
+        expect(bind(fn, obj, 'hello')('hi')).to.equal 'hello hi the dude!'
+        expect(bind(fn, obj, 'hello', 'hi')()).to.equal 'hello hi the dude!'
+
   describe 'Collections', ->
     describe '#each', ->
       {each} = minutils

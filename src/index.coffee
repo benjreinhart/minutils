@@ -1,10 +1,12 @@
-ArrayProto = Array.prototype
 {toString, hasOwnProperty} = Object.prototype
 
+ArrayProto = Array.prototype
 {slice} = ArrayProto
 nativeMap = ArrayProto.map
 nativeReduce = ArrayProto.reduce
 nativeForEach = ArrayProto.forEach
+
+nativeBind = Function.prototype.bind
 
 module.exports = mu = {}
 
@@ -83,6 +85,20 @@ mu.last = (array, n = 1) ->
 
 mu.tail = mu.rest = (array, n = 1) ->
   if array? then array[n..]
+
+
+####################
+# Function methods #
+####################
+
+mu.bind = bind = (fn, obj, args...) ->
+  if nativeBind and nativeBind is fn.bind
+    return fn.bind obj, args...
+
+  if mu.isFunction fn
+    (args2...) -> fn.apply(obj, args.concat(args2))
+  else
+    (throw new TypeError)
 
 
 ######################

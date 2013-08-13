@@ -52,15 +52,16 @@
     }();
   require.define('/lib/index.js', function (module, exports, __dirname, __filename) {
     void function () {
-      var ArrayProto, cache$, each, hasOwnProperty, isEmpty, mu, nativeForEach, nativeMap, nativeReduce, nativeReduceError, slice, toString;
-      ArrayProto = Array.prototype;
+      var ArrayProto, bind, cache$, each, hasOwnProperty, isEmpty, mu, nativeBind, nativeForEach, nativeMap, nativeReduce, nativeReduceError, slice, toString;
       cache$ = Object.prototype;
       toString = cache$.toString;
       hasOwnProperty = cache$.hasOwnProperty;
+      ArrayProto = Array.prototype;
       slice = ArrayProto.slice;
       nativeMap = ArrayProto.map;
       nativeReduce = ArrayProto.reduce;
       nativeForEach = ArrayProto.forEach;
+      nativeBind = Function.prototype.bind;
       module.exports = mu = {};
       mu.extend = function (obj) {
         slice.call(arguments, 1).forEach(function (source) {
@@ -167,6 +168,19 @@
           n = 1;
         if (null != array)
           return array.slice(n);
+      };
+      mu.bind = bind = function (fn, obj, args) {
+        args = 3 <= arguments.length ? [].slice.call(arguments, 2) : [];
+        if (nativeBind && nativeBind === fn.bind)
+          return fn.bind.apply(fn, [obj].concat([].slice.call(args)));
+        if (mu.isFunction(fn)) {
+          return function (args2) {
+            args2 = 1 <= arguments.length ? [].slice.call(arguments, 0) : [];
+            return fn.apply(obj, args.concat(args2));
+          };
+        } else {
+          throw new TypeError;
+        }
       };
       mu.each = each = function (coll, fn, context) {
         var elem, i, key, val;

@@ -41,6 +41,10 @@ Because I don't necessarily need to bring in something the size of underscore in
 * [last](#last)
 * [rest](#rest), [tail](#tail)
 
+#### Functions
+
+* [bind](#bind)
+
 #### Collections
 
 * [each](#each)
@@ -257,6 +261,28 @@ Returns the rest of the array starting at index `n` (default is 1).
 rest([1, 2, 3, 4, 5]) // [2, 3, 4, 5]
 rest([1, 2, 3, 4, 5], 3) // [4, 5]
 ```
+
+### Functions
+
+<a name="bind" />
+##### bind(fn, object[, defaults*])
+
+Returns a function which will always call `fn` with a `this` value of `object`. Optionally accepts default arguments and will return a partially applied function.
+
+```javascript
+var obj = {name: 'the dude!'}
+
+fn = function(greeting, greeting2){
+  return greeting + ' ' + greeting2 + ' ' + this.name
+}
+
+fn('hello', 'hi') // 'hello hi '
+
+bind(fn, obj)('hello', 'hi') // 'hello hi the dude!'
+bind(fn, obj, 'hello')('hi') // 'hello hi the dude!'
+bind(fn, obj, 'hello', 'hi')() // 'hello hi the dude!'
+```
+
 
 ### Collections
 
