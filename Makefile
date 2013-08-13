@@ -13,7 +13,7 @@ CJSIFY = $(BIN)/cjsify
 
 .PHONY: test
 
-all: build test cjsify cjsify-min
+all: build cjsify cjsify-min test
 build: $(LIB)
 
 $(LIBDIR)/%.js: $(SRCDIR)/%.coffee

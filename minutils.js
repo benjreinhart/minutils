@@ -52,13 +52,14 @@
     }();
   require.define('/lib/index.js', function (module, exports, __dirname, __filename) {
     void function () {
-      var ArrayProto, cache$, hasOwnProperty, mu, nativeForEach, nativeMap, slice, toString;
+      var ArrayProto, cache$, each, hasOwnProperty, isEmpty, mu, nativeForEach, nativeMap, nativeReduce, nativeReduceError, slice, toString;
       ArrayProto = Array.prototype;
       cache$ = Object.prototype;
       toString = cache$.toString;
       hasOwnProperty = cache$.hasOwnProperty;
       slice = ArrayProto.slice;
       nativeMap = ArrayProto.map;
+      nativeReduce = ArrayProto.reduce;
       nativeForEach = ArrayProto.forEach;
       module.exports = mu = {};
       mu.extend = function (obj) {
@@ -118,7 +119,7 @@
       mu.isBoolean = function (obj) {
         return obj === true || obj === false || toString.call(obj) === '[object Boolean]';
       };
-      mu.isEmpty = function (obj) {
+      mu.isEmpty = isEmpty = function (obj) {
         var key;
         if (!(null != obj))
           return true;
@@ -167,7 +168,7 @@
         if (null != array)
           return array.slice(n);
       };
-      mu.each = function (coll, fn, context) {
+      mu.each = each = function (coll, fn, context) {
         var elem, i, key, val;
         if (mu.isEmpty(coll))
           return;
@@ -215,6 +216,35 @@
             return accum$;
           }.call(this, []);
         }
+      };
+      nativeReduceError = function () {
+        return new TypeError('Reduce of empty array with no initial value');
+      };
+      mu.reduce = function (coll, fn, memo, context) {
+        var initial;
+        if (null != coll)
+          coll;
+        else
+          coll = [];
+        initial = arguments.length > 2;
+        if (nativeReduce && coll.reduce === nativeReduce) {
+          if (null != context)
+            fn = fn.bind(context);
+          return initial ? coll.reduce(fn, memo) : coll.reduce(fn);
+        }
+        if (isEmpty(coll))
+          return function () {
+            throw nativeReduceError();
+          }();
+        each(coll, function (val, indexOrKey, obj) {
+          if (initial) {
+            return memo = fn.call(context, memo, val, indexOrKey, obj);
+          } else {
+            memo = val;
+            return initial = true;
+          }
+        });
+        return memo;
       };
       mu.partition = function (coll, fn, context) {
         var cache$1, elem, falsy, i, key, result, truthy, val;

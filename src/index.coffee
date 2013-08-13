@@ -3,6 +3,7 @@ ArrayProto = Array.prototype
 
 {slice} = ArrayProto
 nativeMap = ArrayProto.map
+nativeReduce = ArrayProto.reduce
 nativeForEach = ArrayProto.forEach
 
 module.exports = mu = {}
@@ -48,7 +49,7 @@ if 'function' isnt typeof (/./)
 mu.isBoolean = (obj) ->
   obj is true or obj is false or toString.call(obj) is '[object Boolean]'
 
-mu.isEmpty = (obj) ->
+mu.isEmpty = isEmpty = (obj) ->
   return true unless obj?
   if mu.isArray(obj) or mu.isString(obj)
     return obj.length is 0
@@ -88,7 +89,7 @@ mu.tail = mu.rest = (array, n = 1) ->
 # Collection methods #
 ######################
 
-mu.each = (coll, fn, context) ->
+mu.each = each = (coll, fn, context) ->
   return if mu.isEmpty coll
 
   if coll.forEach is nativeForEach
@@ -109,6 +110,27 @@ mu.map = (coll, fn, context) ->
     fn.call(context, elem, i, coll) for elem, i in coll
   else
     fn.call(context, val, key, coll) for own key, val of coll
+
+
+nativeReduceError = ->
+  new TypeError "Reduce of empty array with no initial value"
+
+mu.reduce = (coll, fn, memo, context) ->
+  coll ?= []; initial = arguments.length > 2
+
+  if nativeReduce and coll.reduce is nativeReduce
+    fn = fn.bind(context) if context?
+    return if initial then coll.reduce(fn, memo) else coll.reduce fn
+
+  return (throw nativeReduceError()) if isEmpty coll
+
+  each coll, (val, indexOrKey, obj) ->
+    if initial
+      memo = fn.call context, memo, val, indexOrKey, obj
+    else
+      memo = val
+      initial = true
+  memo
 
 mu.partition = (coll, fn, context) ->
   [truthy, falsy] = (result = [[], []])

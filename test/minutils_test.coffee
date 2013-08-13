@@ -238,6 +238,81 @@ describe 'minutils', ->
           expect(iterator.firstCall.args).to.eql ['jon', 'name', person]
           expect(iterator.alwaysCalledOn context).to.be.true
 
+    describe 'reduce', ->
+      {reduce} = minutils
+      sum = (x, y) -> x + y
+
+      reduceEmptyCollectionWithNoInitialValue = (coll) ->
+        -> reduce coll, (->)
+
+      describe 'array collections', ->
+        it 'returns a value from a list of values, maintaining context', do ->
+          callArgs = []
+          callCount = 0
+          callContext = []
+
+          specialSum = (x, y) ->
+            callCount++
+            callArgs.push arguments
+            callContext.push this
+            sum arguments...
+
+          alwaysCalledOn = (val) ->
+            for ctx in callContext
+              return false unless ctx is val
+            true
+
+          ->
+            context = {}
+            result = reduce (nums = [1, 2, 3]), specialSum, 0, context
+
+            expect(callCount).to.equal 3
+            expect(callArgs[0]).to.eql [0, 1, 0, nums]
+            expect(callArgs[1]).to.eql [1, 2, 1, nums]
+            expect(callArgs[2]).to.eql [3, 3, 2, nums]
+            expect(alwaysCalledOn context).to.be.true
+            expect(result).to.equal 6
+
+        it 'throws an error if the collection is empty and no initial value', ->
+          expect(reduceEmptyCollectionWithNoInitialValue []).to.throw 'Reduce of empty array with no initial value'
+
+        it 'uses the first value as `memo` if no initial value specified', ->
+          expect(reduce [1, 2], sum).to.equal 3
+
+      describe 'object collections', ->
+        it 'returns a value from a list of values, maintaining context', do ->
+          callArgs = []
+          callCount = 0
+          callContext = []
+
+          specialSum = (x, y) ->
+            callCount++
+            callArgs.push arguments
+            callContext.push this
+            sum arguments...
+
+          alwaysCalledOn = (val) ->
+            for ctx in callContext
+              return false unless ctx is val
+            true
+
+          ->
+            context = {}
+            result = reduce (nums = {'one': 1, 'two': 2, 'three': 3}), specialSum, 0, context
+
+            expect(callCount).to.equal 3
+            expect(callArgs[0]).to.eql [0, 1, 'one', nums]
+            expect(callArgs[1]).to.eql [1, 2, 'two', nums]
+            expect(callArgs[2]).to.eql [3, 3, 'three', nums]
+            expect(alwaysCalledOn context).to.be.true
+            expect(result).to.equal 6
+
+        it 'throws an error if the collection is empty and no initial value', ->
+          expect(reduceEmptyCollectionWithNoInitialValue {}).to.throw 'Reduce of empty array with no initial value'
+
+        it 'uses the first value as `memo` if no initial value specified', ->
+          expect(reduce {'one': 1, 'two': 2}, sum).to.equal 3
+
     describe '#partition', ->
       {partition} = minutils
       isEven = (n) -> n % 2 is 0

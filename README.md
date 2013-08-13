@@ -45,6 +45,7 @@ Because I don't necessarily need to bring in something the size of underscore in
 
 * [each](#each)
 * [map](#map)
+* [reduce](#reduce)
 * [partition](#partition)
 
 
@@ -292,6 +293,19 @@ If `coll` is an array, `fn` will be called with `(element, index, coll)`. If `co
 var square = function(n) {return n*n}
 map([2, 4], square) // [4, 16]
 map({two: 2, four: 4}, square) // [4, 16]
+```
+
+<a name="reduce" />
+##### reduce(coll, fn[, memo[, context]])
+
+Returns a single value from a list of values.
+
+If `coll` is an array, `fn` will be called with `(memo, element, index, coll)`. If `coll` is a JavaScript object, then `fn` will be called with `(memo, value, key, coll)`.
+
+```javascript
+var sum = function(x, y){return x+y}
+reduce([1, 2, 3], sum, 0) // 6
+reduce({'one': 1, 'two': 2, 'three': 3}, sum, 0) // 6
 ```
 
 <a name="partition" />
