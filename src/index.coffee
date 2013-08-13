@@ -135,7 +135,7 @@ mu.reduce = (coll, fn, memo, context) ->
   coll ?= []; initial = arguments.length > 2
 
   if nativeReduce and coll.reduce is nativeReduce
-    fn = fn.bind(context) if context?
+    fn = bind(fn, context) if context?
     return if initial then coll.reduce(fn, memo) else coll.reduce fn
 
   return (throw nativeReduceError()) if isEmpty coll

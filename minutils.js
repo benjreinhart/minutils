@@ -243,7 +243,7 @@
         initial = arguments.length > 2;
         if (nativeReduce && coll.reduce === nativeReduce) {
           if (null != context)
-            fn = fn.bind(context);
+            fn = bind(fn, context);
           return initial ? coll.reduce(fn, memo) : coll.reduce(fn);
         }
         if (isEmpty(coll))
