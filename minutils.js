@@ -131,11 +131,11 @@
         }
         return true;
       };
-      mu.isBlank = function (str) {
-        return !/\S/.test(str);
-      };
       mu.has = function (obj, key) {
         return hasOwnProperty.call(obj, key);
+      };
+      mu.isBlank = function (str) {
+        return !/\S/.test(str);
       };
       mu.first = mu.head = function (array, n) {
         if (null == n)

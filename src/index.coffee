@@ -55,11 +55,16 @@ mu.isEmpty = (obj) ->
   return false for own key of obj
   true
 
-mu.isBlank = (str) ->
-  not /\S/.test str
-
 mu.has = (obj, key) ->
   hasOwnProperty.call(obj, key)
+
+
+##################
+# String Methods #
+##################
+
+mu.isBlank = (str) ->
+  not /\S/.test str
 
 
 #################
