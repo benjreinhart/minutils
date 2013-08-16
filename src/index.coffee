@@ -10,9 +10,9 @@ nativeBind = Function.prototype.bind
 
 module.exports = mu = {}
 
-###################
-# Utility methods #
-###################
+##################
+# Object methods #
+##################
 
 mu.extend = (obj) ->
   slice.call(arguments, 1).forEach (source) ->

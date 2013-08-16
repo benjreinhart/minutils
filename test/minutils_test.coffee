@@ -4,7 +4,7 @@ minutils = require '../'
 
 describe 'minutils', ->
 
-  describe 'Utilities', ->
+  describe 'Objects', ->
     describe '#extend', ->
       {extend} = minutils
 

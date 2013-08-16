@@ -14,7 +14,7 @@ Because I don't necessarily need to bring in something the size of underscore in
 
 ## API
 
-#### Utilities
+#### Objects
 
 * [extend](#extend)
 * [defaults](#defaults)
@@ -53,7 +53,7 @@ Because I don't necessarily need to bring in something the size of underscore in
 * [partition](#partition)
 
 
-### Utilities
+### Objects
 
 <a name="extend" />
 ##### extend(destination, objects*)
