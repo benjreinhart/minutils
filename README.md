@@ -1,5 +1,7 @@
 # minutils
 
+[![Build Status](https://travis-ci.org/benjreinhart/minutils.png)](https://travis-ci.org/benjreinhart/minutils)
+
 Minimal utility methods for node and the browser.
 
 ## How does one acquire this library?
