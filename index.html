@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <title>Minutils by benjreinhart</title>
+  </head>
+
+  <body>
+    <div id="container">
+      <div class="inner">
+
+        <header>
+          <h1>Minutils</h1>
+          <h2>Minimal utility methods for node and the browser</h2>
+        </header>
+
+        <section id="downloads" class="clearfix">
+          <a href="https://github.com/benjreinhart/minutils/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
+          <a href="https://github.com/benjreinhart/minutils/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
+          <a href="https://github.com/benjreinhart/minutils" id="view-on-github" class="button"><span>View on GitHub</span></a>
+        </section>
+
+        <hr>
+
+        <section id="main_content">
+          <h1>
+<a name="minutils" class="anchor" href="#minutils"><span class="octicon octicon-link"></span></a>minutils</h1>
+
+<p>Minimal utility methods for node and the browser.</p>
+
+<h2>
+<a name="how-does-one-acquire-this-library" class="anchor" href="#how-does-one-acquire-this-library"><span class="octicon octicon-link"></span></a>How does one acquire this library?</h2>
+
+<p>Node: <code>npm install minutils</code>. <code>require 'minutils'</code></p>
+
+<p>Browser: Copy either minutils.js or minutils.min.js (in the root of this repo) into your project. Inlcude on page. Then access it at <code>window.mu</code>.</p>
+
+<h2>
+<a name="why-not-use-underscore" class="anchor" href="#why-not-use-underscore"><span class="octicon octicon-link"></span></a>Why not use underscore?</h2>
+
+<p>Because I don't necessarily need to bring in something the size of underscore in small projects. Because there may be methods in this library that aren't in underscore (or other libraries). Because it's fun. Because.</p>
+
+<h2>
+<a name="api" class="anchor" href="#api"><span class="octicon octicon-link"></span></a>API</h2>
+
+<h4>
+<a name="utilities" class="anchor" href="#utilities"><span class="octicon octicon-link"></span></a>Utilities</h4>
+
+<ul>
+<li><a href="#extend">extend</a></li>
+<li><a href="#defaults">defaults</a></li>
+<li><a href="#clone">clone</a></li>
+<li><a href="#isObject">isObject</a></li>
+<li><a href="#isArray">isArray</a></li>
+<li><a href="#isString">isString</a></li>
+<li><a href="#isNumber">isNumber</a></li>
+<li><a href="#isFunction">isFunction</a></li>
+<li><a href="#isArguments">isArguments</a></li>
+<li><a href="#isBoolean">isBoolean</a></li>
+<li><a href="#isRegExp">isRegExp</a></li>
+<li><a href="#isDate">isDate</a></li>
+<li><a href="#isEmpty">isEmpty</a></li>
+<li><a href="#has">has</a></li>
+</ul><h4>
+<a name="strings" class="anchor" href="#strings"><span class="octicon octicon-link"></span></a>Strings</h4>
+
+<ul>
+<li><a href="#isBlank">isBlank</a></li>
+</ul><h4>
+<a name="arrays" class="anchor" href="#arrays"><span class="octicon octicon-link"></span></a>Arrays</h4>
+
+<ul>
+<li>
+<a href="#first">first</a>, <a href="#head">head</a>
+</li>
+<li><a href="#last">last</a></li>
+<li>
+<a href="#rest">rest</a>, <a href="#tail">tail</a>
+</li>
+</ul><h4>
+<a name="functions" class="anchor" href="#functions"><span class="octicon octicon-link"></span></a>Functions</h4>
+
+<ul>
+<li><a href="#bind">bind</a></li>
+</ul><h4>
+<a name="collections" class="anchor" href="#collections"><span class="octicon octicon-link"></span></a>Collections</h4>
+
+<ul>
+<li><a href="#each">each</a></li>
+<li><a href="#map">map</a></li>
+<li><a href="#reduce">reduce</a></li>
+<li><a href="#partition">partition</a></li>
+</ul><h3>
+<a name="utilities-1" class="anchor" href="#utilities-1"><span class="octicon octicon-link"></span></a>Utilities</h3>
+
+<p><a name="extend"></a></p>
+
+<h5>
+<a name="extenddestination-objects" class="anchor" href="#extenddestination-objects"><span class="octicon octicon-link"></span></a>extend(destination, objects*)</h5>
+
+<p>Copies all properties from all <code>objects</code> into <code>destination</code>, replacing any existing properties of the same name.</p>
+
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s1">'Richard'</span><span class="p">}</span>
+<span class="nx">extend</span><span class="p">(</span><span class="nx">person</span><span class="p">,</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s1">'Lisa'</span><span class="p">},</span> <span class="p">{</span><span class="nx">age</span><span class="o">:</span> <span class="mi">124</span><span class="p">},</span> <span class="p">{</span><span class="nx">alive</span><span class="o">:</span> <span class="kc">false</span><span class="p">})</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">person</span><span class="p">)</span> <span class="c1">// {name: 'Lisa', age: 124, alive: false}</span>
+</pre></div>
+
+<p><a name="defaults"></a></p>
+
+<h5>
+<a name="defaultsdestination-objects" class="anchor" href="#defaultsdestination-objects"><span class="octicon octicon-link"></span></a>defaults(destination, objects*)</h5>
+
+<p>Takes all properties from <code>objects</code> and copies them in to <code>destination</code> <em>only</em> if the properties are <code>undefined</code> in <code>destination</code></p>
+
+<div class="highlight"><pre><span class="nx">person</span> <span class="o">=</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s1">'Richard'</span><span class="p">}</span>
+<span class="nx">defaults</span><span class="p">(</span><span class="nx">person</span><span class="p">,</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s1">'Lisa'</span><span class="p">},</span> <span class="p">{</span><span class="nx">age</span><span class="o">:</span> <span class="mi">124</span><span class="p">},</span> <span class="p">{</span><span class="nx">alive</span><span class="o">:</span> <span class="kc">false</span><span class="p">})</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">person</span><span class="p">)</span> <span class="c1">// {name: 'Richard', age: 124, alive: false}</span>
+</pre></div>
+
+<p><a name="clone"></a></p>
+
+<h5>
+<a name="cloneobject" class="anchor" href="#cloneobject"><span class="octicon octicon-link"></span></a>clone(object)</h5>
+
+<p>Returns a shallow copy of <code>object</code>.</p>
+
+<div class="highlight"><pre><span class="nx">clone</span><span class="p">({</span><span class="nx">attr</span><span class="o">:</span> <span class="kc">true</span><span class="p">})</span> <span class="c1">// {attr: true}</span>
+</pre></div>
+
+<p><a name="isObject"></a></p>
+
+<h5>
+<a name="isobjectobject" class="anchor" href="#isobjectobject"><span class="octicon octicon-link"></span></a>isObject(object)</h5>
+
+<p>Determines whether <code>object</code> is an Object.</p>
+
+<div class="highlight"><pre><span class="nx">isObject</span><span class="p">([])</span> <span class="c1">// true</span>
+<span class="nx">isObject</span><span class="p">({})</span> <span class="c1">// true</span>
+<span class="nx">isObject</span><span class="p">(</span><span class="s1">''</span><span class="p">)</span> <span class="c1">// false</span>
+</pre></div>
+
+<p><a name="isArray"></a></p>
+
+<h5>
+<a name="isarrayobject" class="anchor" href="#isarrayobject"><span class="octicon octicon-link"></span></a>isArray(object)</h5>
+
+<p>Is the native <code>isArray</code> if exists. Determines whether an object is a real array.</p>
+
+<div class="highlight"><pre><span class="nx">isArray</span><span class="p">([</span><span class="s1">'first element'</span><span class="p">])</span> <span class="c1">// true</span>
+<span class="nx">isArray</span><span class="p">({</span><span class="s1">'0'</span><span class="o">:</span> <span class="s1">'first element'</span><span class="p">,</span> <span class="nx">length</span><span class="o">:</span> <span class="mi">1</span><span class="p">})</span> <span class="c1">// false</span>
+<span class="nx">isArray</span><span class="p">(</span><span class="nx">arguments</span><span class="p">)</span> <span class="c1">// false</span>
+</pre></div>
+
+<p><a name="isString"></a></p>
+
+<h5>
+<a name="isstringobject" class="anchor" href="#isstringobject"><span class="octicon octicon-link"></span></a>isString(object)</h5>
+
+<p>Determines whether <code>object</code> is a String.</p>
+
+<div class="highlight"><pre><span class="nx">isString</span><span class="p">(</span><span class="s1">'s'</span><span class="p">)</span> <span class="c1">// true</span>
+<span class="nx">isString</span><span class="p">({</span><span class="s1">'0'</span><span class="o">:</span> <span class="s1">'s'</span><span class="p">})</span> <span class="c1">// false</span>
+</pre></div>
+
+<p><a name="isNumber"></a></p>
+
+<h5>
+<a name="isnumberobject" class="anchor" href="#isnumberobject"><span class="octicon octicon-link"></span></a>isNumber(object)</h5>
+
+<p>Determines whether <code>object</code> is a Number.</p>
+
+<div class="highlight"><pre><span class="nx">isNumber</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="c1">// true</span>
+<span class="nx">isNumber</span><span class="p">(</span><span class="s1">'10'</span><span class="p">)</span> <span class="c1">// false</span>
+</pre></div>
+
+<p><a name="isFunction"></a></p>
+
+<h5>
+<a name="isfunctionobject" class="anchor" href="#isfunctionobject"><span class="octicon octicon-link"></span></a>isFunction(object)</h5>
+
+<p>Determines whether <code>object</code> is a Function.</p>
+
+<div class="highlight"><pre><span class="nx">isFunction</span><span class="p">(</span><span class="kd">function</span><span class="p">(){})</span> <span class="c1">// true</span>
+<span class="nx">isFunction</span><span class="p">({})</span> <span class="c1">// false</span>
+</pre></div>
+
+<p><a name="isArguments"></a></p>
+
+<h5>
+<a name="isargumentsobject" class="anchor" href="#isargumentsobject"><span class="octicon octicon-link"></span></a>isArguments(object)</h5>
+
+<p>Determines whether <code>object</code> is the <code>arguments</code> object.</p>
+
+<div class="highlight"><pre><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+  <span class="nx">isArguments</span><span class="p">(</span><span class="nx">arguments</span><span class="p">)</span> <span class="c1">// true</span>
+  <span class="nx">isArguments</span><span class="p">({})</span> <span class="c1">//false</span>
+<span class="p">})()</span>
+</pre></div>
+
+<p><a name="isBoolean"></a></p>
+
+<h5>
+<a name="isboolean" class="anchor" href="#isboolean"><span class="octicon octicon-link"></span></a>isBoolean</h5>
+
+<p>Determines whether <code>object</code> is a Boolean.</p>
+
+<div class="highlight"><pre><span class="nx">isBoolean</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span> <span class="c1">// true</span>
+<span class="nx">isBoolean</span><span class="p">(</span><span class="kc">false</span><span class="p">)</span> <span class="c1">// true</span>
+<span class="nx">isBoolean</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span> <span class="c1">// false</span>
+</pre></div>
+
+<p><a name="isRegExp"></a></p>
+
+<h5>
+<a name="isregexpobject" class="anchor" href="#isregexpobject"><span class="octicon octicon-link"></span></a>isRegExp(object)</h5>
+
+<p>Determines whether <code>object</code> is a RegExp.</p>
+
+<div class="highlight"><pre><span class="nx">isRegExp</span><span class="p">(</span><span class="c1">//) // true</span>
+<span class="nx">isRegExp</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="c1">// false</span>
+</pre></div>
+
+<p><a name="isDate"></a></p>
+
+<h5>
+<a name="isdateobject" class="anchor" href="#isdateobject"><span class="octicon octicon-link"></span></a>isDate(object)</h5>
+
+<p>Determines whether <code>object</code> is a Date.</p>
+
+<div class="highlight"><pre><span class="nx">isDate</span><span class="p">(</span><span class="k">new</span> <span class="nb">Date</span><span class="p">)</span> <span class="c1">// true</span>
+<span class="nx">isDate</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="c1">// false</span>
+</pre></div>
+
+<p><a name="isEmpty"></a></p>
+
+<h5>
+<a name="isemptyobject" class="anchor" href="#isemptyobject"><span class="octicon octicon-link"></span></a>isEmpty(object)</h5>
+
+<p>Determines whether <code>object</code> has any values.</p>
+
+<div class="highlight"><pre><span class="nx">isEmpty</span><span class="p">(</span><span class="kc">null</span><span class="p">)</span> <span class="c1">// true</span>
+<span class="nx">isEmpty</span><span class="p">(</span><span class="kc">undefined</span><span class="p">)</span> <span class="c1">// true</span>
+<span class="nx">isEmpty</span><span class="p">({})</span> <span class="c1">// true</span>
+<span class="nx">isEmpty</span><span class="p">([])</span> <span class="c1">// true</span>
+<span class="nx">isEmpty</span><span class="p">(</span><span class="s1">''</span><span class="p">)</span> <span class="c1">// true</span>
+
+<span class="nx">isEmpty</span><span class="p">({</span><span class="nx">key</span><span class="o">:</span> <span class="s1">'val'</span><span class="p">})</span> <span class="c1">// false</span>
+<span class="nx">isEmpty</span><span class="p">([</span><span class="mi">1</span><span class="p">])</span> <span class="c1">// false</span>
+<span class="nx">isEmpty</span><span class="p">(</span><span class="s1">'string'</span><span class="p">)</span> <span class="c1">// false</span>
+</pre></div>
+
+<p><a name="has"></a></p>
+
+<h5>
+<a name="hasobject-key" class="anchor" href="#hasobject-key"><span class="octicon octicon-link"></span></a>has(object, key)</h5>
+
+<p>Determines whether <code>object</code> has own <code>key</code>.</p>
+
+<div class="highlight"><pre><span class="nx">has</span><span class="p">({</span><span class="nx">toString</span><span class="o">:</span> <span class="s1">''</span><span class="p">},</span> <span class="s1">'toString'</span><span class="p">)</span> <span class="c1">// true</span>
+<span class="nx">has</span><span class="p">({},</span> <span class="s1">'toString'</span><span class="p">)</span> <span class="c1">// false</span>
+</pre></div>
+
+<h3>
+<a name="strings-1" class="anchor" href="#strings-1"><span class="octicon octicon-link"></span></a>Strings</h3>
+
+<p><a name="isBlank"></a></p>
+
+<h5>
+<a name="isblankstring" class="anchor" href="#isblankstring"><span class="octicon octicon-link"></span></a>isBlank(string)</h5>
+
+<p>Is <code>true</code> if a <code>string</code> contains only whitespace characters.</p>
+
+<div class="highlight"><pre><span class="nx">isBlank</span><span class="p">(</span><span class="s1">''</span><span class="p">)</span> <span class="c1">// true</span>
+<span class="nx">isBlank</span><span class="p">(</span><span class="s1">'         '</span><span class="p">)</span> <span class="c1">// true</span>
+<span class="nx">isBlank</span><span class="p">(</span><span class="s1">'\n\t\r \t \t \n \n  \r'</span><span class="p">)</span> <span class="c1">// true</span>
+
+<span class="nx">isBlank</span><span class="p">(</span><span class="s1">'      c   '</span><span class="p">)</span> <span class="c1">// false</span>
+</pre></div>
+
+<h3>
+<a name="arrays-1" class="anchor" href="#arrays-1"><span class="octicon octicon-link"></span></a>Arrays</h3>
+
+<p><a name="first"></a>
+<a name="head"></a></p>
+
+<h5>
+<a name="firstarray-n--1" class="anchor" href="#firstarray-n--1"><span class="octicon octicon-link"></span></a>first(array, n = 1)</h5>
+
+<p>Alias: <code>head</code></p>
+
+<p>Returns the first <code>n</code> elements of array or the first element if <code>n</code> is 1 (the default).</p>
+
+<div class="highlight"><pre><span class="nx">first</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span> <span class="c1">// 1</span>
+<span class="nx">first</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span> <span class="mi">3</span><span class="p">)</span> <span class="c1">// [1, 2, 3]</span>
+</pre></div>
+
+<p><a name="last"></a></p>
+
+<h5>
+<a name="lastarray-n--1" class="anchor" href="#lastarray-n--1"><span class="octicon octicon-link"></span></a>last(array, n = 1)</h5>
+
+<p>Returns the last <code>n</code> elements of the array or the last element of the array if <code>n</code> is 1 (the default).</p>
+
+<div class="highlight"><pre><span class="nx">last</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span> <span class="c1">// 5</span>
+<span class="nx">last</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span> <span class="mi">3</span><span class="p">)</span> <span class="c1">// [3, 4, 5]</span>
+</pre></div>
+
+<p><a name="rest"></a>
+<a name="tail"></a></p>
+
+<h5>
+<a name="restarray-n--1" class="anchor" href="#restarray-n--1"><span class="octicon octicon-link"></span></a>rest(array, n = 1)</h5>
+
+<p>Alias: <code>tail</code></p>
+
+<p>Returns the rest of the array starting at index <code>n</code> (default is 1).</p>
+
+<div class="highlight"><pre><span class="nx">rest</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span> <span class="c1">// [2, 3, 4, 5]</span>
+<span class="nx">rest</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span> <span class="mi">3</span><span class="p">)</span> <span class="c1">// [4, 5]</span>
+</pre></div>
+
+<h3>
+<a name="functions-1" class="anchor" href="#functions-1"><span class="octicon octicon-link"></span></a>Functions</h3>
+
+<p><a name="bind"></a></p>
+
+<h5>
+<a name="bindfn-object-defaults" class="anchor" href="#bindfn-object-defaults"><span class="octicon octicon-link"></span></a>bind(fn, object[, defaults*])</h5>
+
+<p>Returns a function which will always call <code>fn</code> with a <code>this</code> value of <code>object</code>. Optionally accepts default arguments and will return a partially applied function.</p>
+
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s1">'the dude!'</span><span class="p">}</span>
+
+<span class="nx">fn</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">greeting</span><span class="p">,</span> <span class="nx">greeting2</span><span class="p">){</span>
+  <span class="k">return</span> <span class="nx">greeting</span> <span class="o">+</span> <span class="s1">' '</span> <span class="o">+</span> <span class="nx">greeting2</span> <span class="o">+</span> <span class="s1">' '</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">name</span>
+<span class="p">}</span>
+
+<span class="nx">fn</span><span class="p">(</span><span class="s1">'hello'</span><span class="p">,</span> <span class="s1">'hi'</span><span class="p">)</span> <span class="c1">// 'hello hi '</span>
+
+<span class="nx">bind</span><span class="p">(</span><span class="nx">fn</span><span class="p">,</span> <span class="nx">obj</span><span class="p">)(</span><span class="s1">'hello'</span><span class="p">,</span> <span class="s1">'hi'</span><span class="p">)</span> <span class="c1">// 'hello hi the dude!'</span>
+<span class="nx">bind</span><span class="p">(</span><span class="nx">fn</span><span class="p">,</span> <span class="nx">obj</span><span class="p">,</span> <span class="s1">'hello'</span><span class="p">)(</span><span class="s1">'hi'</span><span class="p">)</span> <span class="c1">// 'hello hi the dude!'</span>
+<span class="nx">bind</span><span class="p">(</span><span class="nx">fn</span><span class="p">,</span> <span class="nx">obj</span><span class="p">,</span> <span class="s1">'hello'</span><span class="p">,</span> <span class="s1">'hi'</span><span class="p">)()</span> <span class="c1">// 'hello hi the dude!'</span>
+</pre></div>
+
+<h3>
+<a name="collections-1" class="anchor" href="#collections-1"><span class="octicon octicon-link"></span></a>Collections</h3>
+
+<p><a name="each"></a></p>
+
+<h5>
+<a name="eachcoll-fn-context" class="anchor" href="#eachcoll-fn-context"><span class="octicon octicon-link"></span></a>each(coll, fn[, context])</h5>
+
+<p>Applies <code>fn</code> to each element in <code>coll</code>. Returns <code>undefined</code>. <code>context</code> is <code>fn</code>'s <code>this</code> value.</p>
+
+<p>If <code>coll</code> is an array, <code>fn</code> will be called with <code>(element, index, coll)</code>. If <code>coll</code> is a JavaScript object, then <code>fn</code> will be called with <code>(value, key, coll)</code>.</p>
+
+<div class="highlight"><pre><span class="nx">each</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">,</span> <span class="nx">console</span><span class="p">)</span>
+<span class="cm">/*</span>
+<span class="cm">  1 0 [1, 2, 3]</span>
+<span class="cm">  2 1 [1, 2, 3]</span>
+<span class="cm">  3 2 [1, 2, 3]</span>
+<span class="cm">*/</span>
+<span class="nx">each</span><span class="p">({</span><span class="nx">one</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">two</span><span class="o">:</span> <span class="mi">2</span><span class="p">,</span> <span class="nx">three</span><span class="o">:</span> <span class="mi">3</span><span class="p">},</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">,</span> <span class="nx">console</span><span class="p">)</span>
+<span class="cm">/*</span>
+<span class="cm">  1 'one' {one: 1, two: 2, three: 3}</span>
+<span class="cm">  2 'two' {one: 1, two: 2, three: 3}</span>
+<span class="cm">  3 'three' {one: 1, two: 2, three: 3}</span>
+<span class="cm">*/</span>
+</pre></div>
+
+<p><a name="map"></a></p>
+
+<h5>
+<a name="mapcoll-fn-context" class="anchor" href="#mapcoll-fn-context"><span class="octicon octicon-link"></span></a>map(coll, fn[, context])</h5>
+
+<p>Returns an array of the return values of applying <code>fn</code> to each element in <code>coll</code>.</p>
+
+<p>If <code>coll</code> is an array, <code>fn</code> will be called with <code>(element, index, coll)</code>. If <code>coll</code> is a JavaScript object, then <code>fn</code> will be called with <code>(value, key, coll)</code>.</p>
+
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">square</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">n</span><span class="p">)</span> <span class="p">{</span><span class="k">return</span> <span class="nx">n</span><span class="o">*</span><span class="nx">n</span><span class="p">}</span>
+<span class="nx">map</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="nx">square</span><span class="p">)</span> <span class="c1">// [4, 16]</span>
+<span class="nx">map</span><span class="p">({</span><span class="nx">two</span><span class="o">:</span> <span class="mi">2</span><span class="p">,</span> <span class="nx">four</span><span class="o">:</span> <span class="mi">4</span><span class="p">},</span> <span class="nx">square</span><span class="p">)</span> <span class="c1">// [4, 16]</span>
+</pre></div>
+
+<p><a name="reduce"></a></p>
+
+<h5>
+<a name="reducecoll-fn-memo-context" class="anchor" href="#reducecoll-fn-memo-context"><span class="octicon octicon-link"></span></a>reduce(coll, fn[, memo[, context]])</h5>
+
+<p>Returns a single value from a list of values.</p>
+
+<p>If <code>coll</code> is an array, <code>fn</code> will be called with <code>(memo, element, index, coll)</code>. If <code>coll</code> is a JavaScript object, then <code>fn</code> will be called with <code>(memo, value, key, coll)</code>.</p>
+
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">sum</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">){</span><span class="k">return</span> <span class="nx">x</span><span class="o">+</span><span class="nx">y</span><span class="p">}</span>
+<span class="nx">reduce</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="nx">sum</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="c1">// 6</span>
+<span class="nx">reduce</span><span class="p">({</span><span class="s1">'one'</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'two'</span><span class="o">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">'three'</span><span class="o">:</span> <span class="mi">3</span><span class="p">},</span> <span class="nx">sum</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="c1">// 6</span>
+</pre></div>
+
+<p><a name="partition"></a></p>
+
+<h5>
+<a name="partitioncoll-fn-context" class="anchor" href="#partitioncoll-fn-context"><span class="octicon octicon-link"></span></a>partition(coll, fn[, context])</h5>
+
+<p>Returns an array containing two arrays. The first array contains all the values which the <code>fn</code> evalutates as truthy, the second array contains the rest.</p>
+
+<p>If <code>coll</code> is an array, <code>fn</code> will be called with <code>(element, index, coll)</code>. If <code>coll</code> is a JavaScript object, then <code>fn</code> will be called with <code>(value, key, coll)</code>.</p>
+
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">isEven</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">n</span><span class="p">)</span> <span class="p">{</span><span class="k">return</span> <span class="nx">n</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">};</span>
+<span class="nx">partition</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span> <span class="nx">isEven</span><span class="p">)</span> <span class="c1">// [[2, 4], [1, 3, 5]]</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">partition</span><span class="p">({</span><span class="s1">'one'</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'two'</span><span class="o">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">'three'</span><span class="o">:</span> <span class="mi">3</span><span class="p">},</span> <span class="nx">isEven</span><span class="p">))</span>
+<span class="cm">/*</span>
+<span class="cm">  [</span>
+<span class="cm">    [['two', 2]],</span>
+<span class="cm">    [['one', 1], ['three', 3]]</span>
+<span class="cm">  ]</span>
+<span class="cm">*/</span>
+</pre></div>
+        </section>
+
+        <footer>
+          Minutils is maintained by <a href="https://github.com/benjreinhart">benjreinhart</a><br>
+          This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
+        </footer>
+
+        
+      </div>
+    </div>
+  </body>
+</html>
