@@ -38,9 +38,8 @@ mu.isArray = Array.isArray or (obj) ->
 mu.isObject = (obj) ->
   obj is Object(obj)
 
-do ->
-  ['Arguments', 'Date', 'Function', 'Number', 'RegExp', 'String'].forEach (name) ->
-    mu["is#{name}"] = (obj) -> toString.call(obj) is "[object #{name}]"
+['Arguments', 'Date', 'Function', 'Number', 'RegExp', 'String'].forEach (name) ->
+  mu["is#{name}"] = (obj) -> toString.call(obj) is "[object #{name}]"
 
 if mu.isArguments(arguments) is false
   mu.isArguments = (obj) -> !!(obj and mu.has(obj, 'callee'))

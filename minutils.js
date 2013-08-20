@@ -35,7 +35,7 @@
       var cwd = '/';
       return {
         title: 'browser',
-        version: 'v0.8.25',
+        version: 'v0.8.16',
         browser: true,
         env: {},
         argv: [],
@@ -95,20 +95,18 @@
       mu.isObject = function (obj) {
         return obj === Object(obj);
       };
-      (function () {
-        return [
-          'Arguments',
-          'Date',
-          'Function',
-          'Number',
-          'RegExp',
-          'String'
-        ].forEach(function (name) {
-          return mu['is' + name] = function (obj) {
-            return toString.call(obj) === '[object ' + name + ']';
-          };
-        });
-      }());
+      [
+        'Arguments',
+        'Date',
+        'Function',
+        'Number',
+        'RegExp',
+        'String'
+      ].forEach(function (name) {
+        return mu['is' + name] = function (obj) {
+          return toString.call(obj) === '[object ' + name + ']';
+        };
+      });
       if (mu.isArguments(arguments) === false)
         mu.isArguments = function (obj) {
           return !!(obj && mu.has(obj, 'callee'));
