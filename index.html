@@ -413,7 +413,7 @@
 <h5>
 <a name="partitioncoll-fn-context" class="anchor" href="#partitioncoll-fn-context"><span class="octicon octicon-link"></span></a>partition(coll, fn[, context])</h5>
 
-<p>Returns an array containing two arrays. The first array contains all the values which the <code>fn</code> evalutates as truthy, the second array contains the rest.</p>
+<p>For Array, String and Arguments objects, returns an array containing two arrays. For Anything other than Array, String or Arguments objects, returns an array of two objects. The first array or object contains all the values which the <code>fn</code> evalutates as truthy, the second contains the rest.</p>
 
 <p>If <code>coll</code> is an array, <code>fn</code> will be called with <code>(element, index, coll)</code>. If <code>coll</code> is a JavaScript object, then <code>fn</code> will be called with <code>(value, key, coll)</code>.</p>
 
