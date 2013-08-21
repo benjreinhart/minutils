@@ -148,14 +148,16 @@ mu.reduce = (coll, fn, memo, context) ->
   memo
 
 mu.partition = (coll, fn, context) ->
-  [truthy, falsy] = (result = [[], []])
-  return result if mu.isEmpty coll
+  if mu.isArray(coll) or mu.isString(coll) or mu.isArguments(coll)
+    truthy = []; falsy = []
+  else
+    truthy = {}; falsy = {}
 
-  if mu.isArray coll
+  if mu.isArray truthy
     for elem, i in coll
       (if fn.call(context, elem, i, coll) then truthy else falsy).push elem
   else
     for own key, val of coll
-      (if fn.call(context, val, key, coll) then truthy else falsy).push [key, val]
+      (if fn.call(context, val, key, coll) then truthy else falsy)[key] = val
 
-  result
+  [truthy, falsy]

@@ -259,16 +259,15 @@
         return memo;
       };
       mu.partition = function (coll, fn, context) {
-        var cache$1, elem, falsy, i, key, result, truthy, val;
-        cache$1 = result = [
-          [],
-          []
-        ];
-        truthy = cache$1[0];
-        falsy = cache$1[1];
-        if (mu.isEmpty(coll))
-          return result;
-        if (mu.isArray(coll)) {
+        var elem, falsy, i, key, truthy, val;
+        if (mu.isArray(coll) || mu.isString(coll) || mu.isArguments(coll)) {
+          truthy = [];
+          falsy = [];
+        } else {
+          truthy = {};
+          falsy = {};
+        }
+        if (mu.isArray(truthy)) {
           for (var i$ = 0, length$ = coll.length; i$ < length$; ++i$) {
             elem = coll[i$];
             i = i$;
@@ -279,13 +278,13 @@
             if (!isOwn$(coll, key))
               continue;
             val = coll[key];
-            (fn.call(context, val, key, coll) ? truthy : falsy).push([
-              key,
-              val
-            ]);
+            (fn.call(context, val, key, coll) ? truthy : falsy)[key] = val;
           }
         }
-        return result;
+        return [
+          truthy,
+          falsy
+        ];
       };
       function isOwn$(o, p) {
         return {}.hasOwnProperty.call(o, p);

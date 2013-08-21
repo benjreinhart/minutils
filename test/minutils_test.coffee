@@ -359,9 +359,9 @@ describe 'minutils', ->
 
       describe 'object collections', ->
         it 'is an array of two arrays', ->
-          expect(partition {'one': 1, 'two': 2, 'three': 3}, isEven).to.eql [
-            [['two', 2]],
-            [['one', 1], ['three', 3]]
+          expect(partition {one: 1, two: 2, three: 3}, isEven).to.eql [
+            {two: 2},
+            {one: 1, three: 3}
           ]
 
         it 'is called with `context` as its `this` value', ->
