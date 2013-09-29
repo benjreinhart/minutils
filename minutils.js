@@ -31,25 +31,6 @@
   require.define = function (file, fn) {
     require.modules[file] = fn;
   };
-  var process = function () {
-      var cwd = '/';
-      return {
-        title: 'browser',
-        version: 'v0.8.16',
-        browser: true,
-        env: {},
-        argv: [],
-        nextTick: global.setImmediate || function (fn) {
-          setTimeout(fn, 0);
-        },
-        cwd: function () {
-          return cwd;
-        },
-        chdir: function (dir) {
-          cwd = dir;
-        }
-      };
-    }();
   require.define('/lib/index.js', function (module, exports, __dirname, __filename) {
     void function () {
       var ArrayProto, bind, cache$, each, hasOwnProperty, isEmpty, mu, nativeBind, nativeForEach, nativeMap, nativeReduce, nativeReduceError, slice, toString;

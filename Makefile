@@ -21,10 +21,10 @@ $(LIBDIR)/%.js: $(SRCDIR)/%.coffee
 	$(COFFEE) <"$<" >"$@"
 
 cjsify: build
-	$(CJSIFY) lib/index.js --export mu --output ./minutils.js
+	$(CJSIFY) lib/index.js --export mu --node false --output ./minutils.js
 
 cjsify-min: build
-	$(CJSIFY) lib/index.js --export mu --minify --output ./minutils.min.js
+	$(CJSIFY) lib/index.js --export mu --node false --minify --output ./minutils.min.js
 
 test: build
 	$(MOCHA) --reporter spec --recursive --colors
